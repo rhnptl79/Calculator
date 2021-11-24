@@ -19,6 +19,9 @@ app.get("/calculator", function (req, res) {
     firstNumber: "",
     secondNumber: "",
     result: "",
+    userName: "",
+    bmiStatus: "",
+    bmiMessage: "",
     error: false,
   };
   // use res.render to load up an ejs view file
@@ -27,8 +30,13 @@ app.get("/calculator", function (req, res) {
 
 // calculator tasks
 app.post("/calculator", function (req, res) {
-  const { firstNumber, secondNumber, operation } = req.body;
-  const operationResult = calculate(firstNumber, secondNumber, operation);
+  const { firstNumber, secondNumber, userName, operation } = req.body;
+  const operationResult = calculate(
+    firstNumber,
+    secondNumber,
+    operation,
+    userName
+  );
   console.log("Operation result -- ", operationResult);
   res.render("pages/calculator", operationResult);
 });

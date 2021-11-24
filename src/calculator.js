@@ -1,3 +1,4 @@
+const fbService = require("./fbService");
 const isNumber = (data) => {
   return !isNaN(data);
 };
@@ -14,6 +15,9 @@ const validateParams = (firstNumber, secondNumber, operation) => {
     operationError: "",
     result: "",
     resultError: "",
+    userName: "",
+    bmiStatus: "",
+    bmiMessage: "",
     error: false,
   };
 
@@ -48,23 +52,11 @@ const validateParams = (firstNumber, secondNumber, operation) => {
   return false;
 };
 
-const add = (num1, num2) => {
-  return num1 + num2;
-};
-
-const subtract = (num1, num2) => {
-  return num1 - num2;
-};
-
 const multiply = (num1, num2) => {
-  return num1 * num2;
+  return num2 / (num1 * num1);
 };
 
-const divide = (num1, num2) => {
-  return num1 / num2;
-};
-
-const calculate = (firstNumber, secondNumber, operation) => {
+const calculate = (firstNumber, secondNumber, operation, userName) => {
   const isParamValid = validateParams(firstNumber, secondNumber, operation);
   if (isParamValid !== false) {
     return isParamValid;
@@ -73,27 +65,47 @@ const calculate = (firstNumber, secondNumber, operation) => {
   const firstNumberParsed = parseFloat(firstNumber);
   const secondNumberParsed = parseFloat(secondNumber);
 
-  let result;
+  let bmiRsult;
   switch (operation) {
-    case "add":
-      result = add(firstNumberParsed, secondNumberParsed);
-      break;
-    case "subtract":
-      result = subtract(firstNumberParsed, secondNumberParsed);
-      break;
     case "multiply":
-      result = multiply(firstNumberParsed, secondNumberParsed);
-      break;
-    case "divide":
-      result = divide(firstNumberParsed, secondNumberParsed);
+      bmiRsult = multiply(firstNumberParsed, secondNumberParsed);
       break;
     default:
       break;
   }
+
+  var statusBMI = "",
+    MsgBMI = "";
+  if (bmiRsult < 18.5) {
+    statusBMI = "UnderWeight";
+    MsgBMI = "You should eat a little bit more";
+  }
+  if (bmiRsult >= 18.5 && bmiRsult < 25) {
+    statusBMI = "Normal";
+    MsgBMI = "Keep doing what you are doing";
+  }
+  if (bmiRsult >= 25 && bmiRsult < 29.9) {
+    statusBMI = "OverWeight";
+    MsgBMI = "You should cut down your food a little bit";
+  }
+  if (bmiRsult >= 30) {
+    statusBMI = "Obese";
+    MsgBMI = "You should really do someting about your apetite ASAP";
+  }
+
+  fbService.collection("UserTableBMI").add({
+    name: userName,
+    height: firstNumber,
+    weight: secondNumber,
+  });
+
   return {
     firstNumber: firstNumber,
     secondNumber: secondNumber,
-    result: result,
+    result: bmiRsult,
+    userName: userName,
+    bmiStatus: statusBMI,
+    bmiMessage: MsgBMI,
     error: false,
   };
 };

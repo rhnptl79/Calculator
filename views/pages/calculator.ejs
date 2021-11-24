@@ -1,70 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <%- include('../partials/head'); %>
-</head>
+  </head>
 
-<body class="container">
-
-    <header>
-        <%- include('../partials/header'); %>
-    </header>
+  <body class="container">
+    <header><%- include('../partials/header'); %></header>
 
     <main>
-        <div class="d-flex justify-content-center" style="margin-top: 3em;">
-            <form  name="form1" method="POST" action="/calculator" >
-                <div class="form-group">
-                    <label for="firstNumber">First number</label>
-                    <input type="text" class="form-control" id="firstNumber" name="firstNumber" aria-describedby="10" placeholder="enter number" value="<%= firstNumber %>">
-                    
-                </div>
-                <% if(error === true && firstNumberError) { %>
-                    <div class="alert alert-danger" role="alert">
-                        <%= firstNumberError %>
-                    </div>
-                <% } %>
+      <div class="d-flex justify-content-center" style="margin-top: 3em">
+        <form name="form1" method="POST" action="/calculator">
+          <div class="form-group">
+            <label for="name">Enter Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              name="userName"
+              aria-describedby="10"
+              placeholder="Enter Your Name"
+              value="<%= userName %>"
+            />
+          </div>
 
-                <div class="form-group">
-                    <label for="secondNumber">Second number</label>
-                    <input type="text" class="form-control" id="secondNumber" name="secondNumber" placeholder="enter number" value="<%= secondNumber %>">
-                </div>
-                <% if(error === true && secondNumberError) { %>
-                    <div class="alert alert-danger" role="alert">
-                        <%= secondNumberError %>
-                    </div>
-                <% } %>
-                
-                <div class="form-group">
-                    <label for="result">Result</label>
-                    <input type="text" class="form-control" id="result" name="result" placeholder="result will appear here" value="<%= result %>">
-                </div>
-                <% if(error === true && resultError) { %>
-                    <div class="alert alert-danger" role="alert">
-                        <%= resultError %>
-                    </div>
-                <% } %>
-                
-                <div class="grid">
-                    <div class="row">
-                        <button type="submit" class="btn btn-primary myButtons" name="operation" value="add" > Add (+) </button>
-                        <button type="submit" class="btn btn-primary myButtons" name="operation" value="subtract" > Subtract (-) </button>
-                        <button type="submit" class="btn btn-primary myButtons" name="operation" value="multiply" > Multiply (*) </button>
-                        <button type="submit" class="btn btn-primary myButtons" name="operation" value="divide" > divide (/) </button>
-                    </div>
-                    <div class="row d-flex justify-content-center">
-                        <a href="/" class="btn btn-primary"> clear all </a>
-                    </div>
-                </div>
-                
-            </form>
-        </div>
+          <div class="form-group">
+            <label for="firstNumber">Enter Height</label>
+            <input
+              type="text"
+              class="form-control"
+              id="firstNumber"
+              name="firstNumber"
+              aria-describedby="10"
+              placeholder="Enter Height in meter"
+              value="<%= firstNumber %>"
+            />
+          </div>
+          <% if(error === true && firstNumberError) { %>
+          <div class="alert alert-danger" role="alert">
+            <%= firstNumberError %>
+          </div>
+          <% } %>
+
+          <div class="form-group">
+            <label for="secondNumber">Enter Weight</label>
+            <input
+              type="text"
+              class="form-control"
+              id="secondNumber"
+              name="secondNumber"
+              placeholder="Enter weight in Kg"
+              value="<%= secondNumber %>"
+            />
+          </div>
+          <% if(error === true && secondNumberError) { %>
+          <div class="alert alert-danger" role="alert">
+            <%= secondNumberError %>
+          </div>
+          <% } %>
+
+          <div class="form-group">
+            <label for="result">Result</label>
+            <input
+              type="text"
+              class="form-control"
+              id="result"
+              name="result"
+              placeholder="BMI will appear here"
+              value="<%= result %>"
+            />
+
+            Status :<br />
+            <span><%= bmiStatus %></span><br />
+            Message :<br />
+            <span><%= bmiMessage %></span>
+          </div>
+
+          <% if(error === true && resultError) { %>
+          <div class="alert alert-danger" role="alert"><%= resultError %></div>
+          <% } %>
+
+          <div class="grid">
+            <div class="row">
+              <button
+                type="submit"
+                class="btn btn-primary myButtons"
+                name="operation"
+                value="multiply"
+              >
+                Calculate
+              </button>
+              
+            </div>
+            <div class="form-group">
+              <label for="searchNumber">Enter UserName to search your BMI Details</label>
+              <input
+                type="text"
+                class="form-control"
+                id="ndNumber"
+                name="condNumber"
+                placeholder="Enter name to get your details"
+              />
+            </div>
+            <div class="row d-flex justify-content-center">
+              <!-- <a href="/" class="btn btn-primary"> clear all </a> -->
+            </div>
+          </div>
+        </form>
+      </div>
     </main>
 
-    <footer>
-        <%- include('../partials/footer'); %>
-    </footer>
-
-</body>
-
+    <footer><%- include('../partials/footer'); %></footer>
+  </body>
 </html>
